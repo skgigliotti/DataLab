@@ -85,7 +85,75 @@ int isNegative(int x) {
  *   Rating: 4
  */
 int bitParity(int x) {
-  return 2;
+  //mask with 001
+  //count 
+  //return 1 
+  int count = 0;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  count = count + (x & 1); 
+  x = x >> 1;
+  return count & 1;
 }
 
 /*
@@ -100,16 +168,19 @@ int bitParity(int x) {
  *   Rating: 3
  */
 int ezThreeFourths(int x) {
-
-  //don't shift the first bit
-
-  int m = 1 << 31;
   
-  m = (m & x);
-  
+  int s, r;
+  s = (1 << 31);
+  r = x >> 31; 
+  s = s & x;
+  //s = !!s;
+  printf("%d \n", s);
+  //s = !(!(x >> 31));
   x = x + x + x;
+  
+  
   x = x >> 2;
-  x = x ^ m;
+  x = x + ~(!r);
 
   return x;
 }
@@ -152,10 +223,12 @@ int float_f2i(unsigned uf) {
 int main(int argc, char *argv[]){
   //printf("%d \n", sign(4));
   //printf("%d \n", sign(0));
-  //printf("%d \n", sign(-10));
-  printf("%d \n",ezThreeFourths(11));
-  printf("%d \n",ezThreeFourths(-9));
-  printf("%d \n",ezThreeFourths(1073741824));
+  printf("%d \n", bitParity(7));
+  printf("%d \n", bitParity(5));
+  printf("%d \n", bitParity(-2147483648));
+  //printf("%d \n",ezThreeFourths(11));
+  //printf("%d \n",ezThreeFourths(-9));
+  //printf("%d \n",ezThreeFourths(-2147483648));
 
 }
 
