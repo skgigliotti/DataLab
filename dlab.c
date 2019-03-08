@@ -223,15 +223,34 @@ int float_f2i(unsigned uf) {
   return 2;
 }
 
+/* 
+ * float_neg - Return bit-level equivalent of expression -f for
+ *   floating point argument f.
+ *   Both the argument and result are passed as unsigned int's, but
+ *   they are to be interpreted as the bit-level representations of
+ *   single-precision floating point values.
+ *   When argument is NaN, return argument.
+ *   Legal ops: Any integer/unsigned operations incl. ||, &&. also if, while
+ *   Max ops: 10
+ *   Rating: 2
+ */
+unsigned float_neg(unsigned uf) {
+  unsigned ret;
+  if(uf != uf){
+    return uf;
+  }
+ return 2;
+}
+
 
 
 
 int main(int argc, char *argv[]){
   //printf("%d \n", sign(4));
   //printf("%d \n", sign(0));
-  printf("%d \n", bitParity(7));
-  printf("%d \n", bitParity(5));
-  printf("%d \n", bitParity(-2147483648));
+  printf("%d \n", float_neg(512));
+  printf("%d \n", float_neg(-512));
+  printf("%d \n", float_neg(-2147483648));
   //printf("%d \n",ezThreeFourths(11));
   //printf("%d \n",ezThreeFourths(-9));
   //printf("%d \n",ezThreeFourths(-2147483648));
