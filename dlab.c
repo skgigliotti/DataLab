@@ -8,11 +8,16 @@
  *  Rating: 1
  */
 int upperBits(int n) {
+   //set var y to be either 0 or 1
+   //this handles the case where n = 0 
    int y = !!n;
-   int x;
-   int neg1 = ~0;
+
+   //shift y all the way to the left
+   //y will be 1000... or all 0
    y = y << 31;
-   y = y >> (n + neg1);
+
+   //add shift y to the right n-1 times
+   y = y >> (n + ~0);
 
    return y;
 }
@@ -30,6 +35,7 @@ int isNotEqual(int x, int y) {
  *   Rating: 1
  */
 int isZero(int x) {
+  //if x is 0, !x = 1
   return !x;
 }
 
@@ -43,23 +49,17 @@ int isZero(int x) {
  *  Rating: 2
  */
 int sign(int x) {
+    //shift x almost all the way to the right
     int y = x >> 30;
+
+    //if x is 1 or -1, z will be 1
+    //if x is 0, z will be 0 
     int z = !!x;
-
+    
+    //if x is negative, y will be 1111...110 and or with 1 will be -1
+    //if x is zero, y will be 0 and or with 0 is 0
+    //if x is positive, y will be 0 and or with 1 is 1
     return y|z; 
-}
-
-/* 
- * isAsciiDigit - return 1 if 0x30 <= x <= 0x39 (ASCII codes for characters '0' to '9')
- *   Example: isAsciiDigit(0x35) = 1.
- *            isAsciiDigit(0x3a) = 0.
- *            isAsciiDigit(0x05) = 0.
- *   Legal ops: ! ~ & ^ | + << >>
- *   Max ops: 15
- *   Rating: 3
- */
-int isAsciiDigit(int x) {
-  return 2;
 }
 
 /* 
@@ -70,9 +70,14 @@ int isAsciiDigit(int x) {
  *   Rating: 2
  */
 int isNegative(int x) {
+
   int y = 1;
+
+  //shift 1 to the left
   y = y << 31;
   
+  //mask the sign bit of x
+  //if this is 1 return 1, else return 0
   return !(!(x & y));
 }
 
@@ -85,9 +90,9 @@ int isNegative(int x) {
  *   Rating: 4
  */
 int bitParity(int x) {
-  //mask with 001
-  //count 
-  //return 1 
+  //mask with 1
+  //count the number of ones
+  //return the count masked with 1
   int count = 0;
   count = count + (x & 1); 
   x = x >> 1;
@@ -192,6 +197,7 @@ int ezThreeFourths(int x) {
  *   Rating: 1
  */
 int minusOne(void) {
+  //0 inverted is -1
   return ~0;
 }
 
