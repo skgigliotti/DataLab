@@ -176,16 +176,13 @@ int ezThreeFourths(int x) {
   
   int s, r;
   s = (1 << 31);
-  r = x >> 31; 
-  s = s & x;
-  //s = !!s;
-  printf("%d \n", s);
-  //s = !(!(x >> 31));
+  r = x >> 31;
+  r = s + r & 3; 
+  
+  
   x = x + x + x;
-  
-  
+  x = x + r;
   x = x >> 2;
-  x = x + ~(!r);
 
   return x;
 }
@@ -234,26 +231,106 @@ int float_f2i(unsigned uf) {
  *   Max ops: 10
  *   Rating: 2
  */
+//00000000000000000000000000000101  5
+//11111111111111111111111111111011 -5
+//00000000000000000000000000001111  15
+//11111111111111111111111111110001 -15
 unsigned float_neg(unsigned uf) {
-  unsigned ret;
-  if(uf != uf){
+  
+  //negative sign bit to mask 
+  int m = 1 << 31;
+  int ret;
+  
+  //the max value is 8 1's after the mantissa being 0
+  int max = 2139095040;
+
+  ret = uf & m;
+
+  //if the float is greater than the maximum value that the float can be,
+  //return the uf as the instructions say
+  if(uf == -2147483648){
+    return 0;
+  }
+  if(uf == 0){
+    return -2147483648;
+  }
+  if(ret > max){
     return uf;
   }
- return 2;
+
+
+  else{
+    return ret;
+  }
+
 }
 
+//abs
+//if the solution is too large to fit in the float 
+/* 
+ * float_abs - Return bit-level equivalent of absolute value of f for
+ *   floating point argument f.
+ *   Both the argument and result are passed as unsigned int's, but
+ *   they are to be interpreted as the bit-level representations of
+ *   single-precision floating point values.
+ *   When argument is NaN, return argument..
+ *   Legal ops: Any integer/unsigned operations incl. ||, &&. also if, while
+ *   Max ops: 10
+ *   Rating: 2
+ */
+unsigned float_abs(unsigned uf) {
+  //used an online calculator to find the value of all 1's with sign bit of 0
+  int m = 2147483647;
+  int ret;
+  
+  //the max value is 8 1's after the mantissa being 0
+  int max = 2139095040;
+  
+  //get rid of the sign bit
+  ret = uf & m;
 
+  //if the float is greater than the maximum value that the float can be,
+  //return the uf as the instructions say
+  if(ret > max){
+    return uf;
+  }
+  else{
+    
+    return ret;
+  }
 
+}
+
+/* 
+ * divpwr2 - Compute x/(2^n), for 0 <= n <= 30
+ *  Round toward zero
+ *   Examples: divpwr2(15,1) = 7, divpwr2(-33,4) = -2
+ *   Legal ops: ! ~ & ^ | + << >>
+ *   Max ops: 15
+ *   Rating: 2
+ */
+int divpwr2(int x, int n) {
+    int m = 1 << 31;
+    int s = x & m;
+
+    x = x >> 1;
+    x = (x >> (n >> 1));
+
+    
+    return x;
+}
 
 int main(int argc, char *argv[]){
   //printf("%d \n", sign(4));
   //printf("%d \n", sign(0));
-  printf("%d \n", float_neg(512));
-  printf("%d \n", float_neg(-512));
+  //printf("%d \n", float_neg(5));
+  //printf("%d \n", float_neg(0));
   printf("%d \n", float_neg(-2147483648));
-  //printf("%d \n",ezThreeFourths(11));
-  //printf("%d \n",ezThreeFourths(-9));
+  //printf("%d \n",ezThreeFourths(0));
+  //printf("%d \n",ezThreeFourths(15));
   //printf("%d \n",ezThreeFourths(-2147483648));
+  //printf("%d \n", divpwr2(15,3));
+  //printf("%d \n", divpwr2(-8,3));
 
 }
 
